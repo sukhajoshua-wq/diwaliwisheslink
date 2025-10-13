@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>दिवाली की हार्दिक शुभकामनाएँ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Ads Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1430612779241879"
+     crossorigin="anonymous"></script>
+    <style>
+        :root { --gold: #FFD700; --dark-bg: #000; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 25px; background: var(--dark-bg); color: #fff; text-align: center; overflow-x: hidden; }
+        #fireworks-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .blinking-lights { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+        .light { position: absolute; width: 10px; height: 20px; border-radius: 50%; animation: blink 2s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; box-shadow: none; } 100% { opacity: 1; } }
+        
+        #welcome-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: var(--gold);
+        }
+        #welcome-overlay h2 { font-family: 'Tiro Devanagari Hindi', serif; font-size: 2em; }
+        #enter-button {
+            padding: 15px 30px; font-size: 1.2em; font-weight: 600; color: #333;
+            background: linear-gradient(45deg, #FFDF00, #FFC107); border: none;
+            border-radius: 10px; cursor: pointer; margin-top: 20px;
+        }
+        
+        #subscribe-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+        }
+        .modal-content { background: #222; padding: 30px; border-radius: 15px; border: 2px solid var(--gold); width: 90%; max-width: 400px; text-align: center; }
+        .modal-content h3 { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.5em; color: var(--gold); }
+        .modal-content p { font-size: 1em; color: #ddd; }
+        #subscribe-btn { padding: 12px 25px; font-size: 1.1em; font-weight: 600; color: #fff; background: linear-gradient(45deg, #ff0000, #c80000); border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; }
+        
+        .container {
+            max-width: 500px; margin: 20px auto; padding: 30px; border-radius: 20px;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.4); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            position: relative; z-index: 10; display: none;
+        }
+        #senderInfo { display: none; margin-bottom: 20px; }
+        #senderPhoto { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px var(--gold); }
+        #greetingMessage { font-family: 'Tiro Devanagari Hindi', serif; font-size: 2em; font-weight: 700; color: #fff; text-shadow: 0 0 10px var(--gold); line-height: 1.4; margin-top: 10px; }
+        img.main-image { max-width: 60%; margin-top: 15px; border-radius: 15px; border: 3px solid var(--gold); }
+        .shayari-container { position: relative; margin: 30px 0; padding: 20px; border-radius: 10px; overflow: hidden; background: rgba(0,0,0,0.3); }
+        .sparkler { position: absolute; width: 5px; height: 5px; background: #fff; border-radius: 50%; animation: sparkle-anim 1.5s infinite; }
+        @keyframes sparkle-anim { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+        .diwali-shayari { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.4em; color: #f5deb3; line-height: 1.7; font-weight: 600; text-shadow: 0 0 8px #000; position: relative; z-index: 2; }
+        .video-container { margin: 30px 0; }
+        #diwali-video { width: 100%; max-width: 400px; border: 3px solid var(--gold); border-radius: 15px; }
+        
+        /* -- Product Suggestions Styles -- */
+        .suggestions-container { margin: 40px 0; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px; }
+        .suggestions-title { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.6em; color: var(--gold); text-align: center; margin-bottom: 25px; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .product-link { display: block; text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3); transition: transform 0.3s, box-shadow 0.3s; }
+        .product-link:hover { transform: translateY(-5px); box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+        .product-link img { width: 100%; max-width: 120px; margin: 0 auto 10px; display: block; border-radius: 8px; }
+        .product-link p { margin: 0; font-size: 1em; font-weight: 500; text-align: center; font-family: 'Poppins', sans-serif; }
+        
+        .ads-container { margin: 25px 0; }
+        .input-area { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 15px; margin-top: 20px; }
+        .input-area p { font-size: 1.2em; margin-bottom: 15px; color: #f1f1f1; font-weight: 600; }
+        .input-field { width: 85%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 2px solid var(--gold); font-size: 1em; text-align: center; background-color: rgba(0, 0, 0, 0.3); color: #fff; }
+        #generateBtn, #shareBtn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px; width: 85%;
+            margin-top: 10px; padding: 14px; font-size: 1.2em; font-weight: 600; border-radius: 10px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        #generateBtn { color: #333; background: linear-gradient(45deg, #FFDF00, #FFC107); border: none; }
+        #shareBtn { color: white; background: linear-gradient(45deg, #25D366, #128C7E); border: none; display: none; }
+        #linkContainer { margin-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+    <audio src="Diwali.mp3" id="diwali-audio" loop></audio>
+
+    <div id="welcome-overlay">
+        <h2>आपके लिए एक दिवाली का तोहफा है! 🎁</h2>
+        <button id="enter-button">देखने के लिए क्लिक करें</button>
+    </div>
+
+    <div id="subscribe-modal">
+        <div class="modal-content">
+            <h3>एक छोटा सा कदम!</h3>
+            <p>शुभकामना भेजने से पहले, कृपया हमारे YouTube चैनल को सब्सक्राइब करके हमें सपोर्ट करें।</p>
+            <button id="subscribe-btn" onclick="handleSubscription()">सब्सक्राइब करें</button>
+        </div>
+    </div>
+
+    <div class="blinking-lights" id="lights-container"></div>
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div class="container" id="main-content">
+        <div id="senderInfo">
+            <img id="senderPhoto" src="" alt="भेजने वाले की फोटो">
+            <h1 id="greetingMessage"></h1>
+        </div>
+        <img src="laxmi.png" alt="शुभ दीपावली" class="main-image">
+        
+        <div class="shayari-container" id="shayariBox">
+            <p class="diwali-shayari">दीपों का यह पावन त्यौहार, आपके जीवन में लाए खुशियाँ हजार।</p>
+        </div>
+
+        <div class="video-container">
+            <video id="diwali-video" controls playsinline loop muted>
+                <!-- वीडियो का सोर्स जावास्क्रिप्ट से सेट किया जाएगा -->
+            </video>
+        </div>
+        
+        <!-- Diwali Shopping Suggestions -->
+        <div class="suggestions-container">
+            <h3 class="suggestions-title">दिवाली शॉपिंग सुझाव</h3>
+            <div class="product-grid">
+                <a href="https://amzn.to/4pTm1Rr" target="_blank" class="product-link">
+                    <img src="smart_watches.png" alt="Smart Watches">
+                    <p>स्मार्ट घड़ियाँ</p>
+                </a>
+                <a href="https://amzn.to/42vuIHn" target="_blank" class="product-link">
+                    <img src="Deackorate.png" alt="Decoration Items">
+                    <p>सजावट का सामान</p>
+                </a>
+                <a href="https://amzn.to/42VWZqM" target="_blank" class="product-link">
+                    <img src="ledbulb.png" alt="LED Bulb">
+                    <p>LED बल्ब</p>
+                </a>
+                <a href="https://amzn.to/3KCRqra" target="_blank" class="product-link">
+                    <img src="panda.png" alt="Panda Soft Toy">
+                    <p>पांडा खिलौना</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Google Ad Unit -->
+        <div class="ads-container">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1430612779241879" data-ad-slot="3499629095" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+        </div>
+
+        <div class="input-area">
+            <p>आप भी शुभकामनाएं भेजें</p>
+            <input type="text" id="nameInput" class="input-field" placeholder="यहां अपना नाम लिखें">
+            <input type="text" id="photoInput" class="input-field" placeholder="फोटो का URL पेस्ट करें (वैकल्पिक)">
+            <button id="generateBtn" onclick="showSubscribePopup()">लिंक जेनरेट करें</button>
+            <div id="linkContainer">
+                <input type="text" id="generatedLink" class="input-field" readonly>
+            </div>
+            <button id="shareBtn" onclick="shareLink()">
+                <svg xmlns="http://www.w_3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+                &nbsp;शेयर करें
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- अपने वीडियो का नाम यहाँ बदलें ---
+        const videoUrl = 'Diwali.mp4';
+
+        // --- अपने YouTube चैनल का URL यहाँ डालें ---
+        const youtubeChannelUrl = 'https://youtube.com/@joshuatvrecords?si=m3-1dswZpVKa0UMU&sub_confirmation=1';
+
+        const enterButton = document.getElementById('enter-button');
+        const welcomeOverlay = document.getElementById('welcome-overlay');
+        const mainContent = document.getElementById('main-content');
+        const diwaliVideo = document.getElementById('diwali-video');
+        const diwaliAudio = document.getElementById('diwali-audio');
+
+        enterButton.addEventListener('click', () => {
+            welcomeOverlay.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            // वीडियो और ऑडियो चलाएं
+            diwaliVideo.src = videoUrl;
+            diwaliVideo.play().catch(error => {
+                console.error("Video autoplay failed:", error);
+                // अगर वीडियो ऑटोप्ले नहीं होता है तो उसे Mute करके चलाएं
+                diwaliVideo.muted = true;
+                diwaliVideo.play();
+            });
+
+            diwaliAudio.play().catch(error => {
+                console.error("Audio autoplay failed:", error);
+            });
+        });
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const senderName = urlParams.get('name');
+            const senderPhoto = urlParams.get('photo');
+            const greetingElement = document.getElementById('greetingMessage');
+            const senderInfo = document.getElementById('senderInfo');
+            const senderPhotoImg = document.getElementById('senderPhoto');
+            if (senderName) {
+                senderInfo.style.display = 'block';
+                greetingElement.innerHTML = `<span>${decodeURIComponent(senderName)}</span> की ओर से आप सभी को Happy Dipawali 🎇`;
+                if (senderPhoto) { senderPhotoImg.src = decodeURIComponent(senderPhoto); senderPhotoImg.style.display = 'block'; } else { senderPhotoImg.style.display = 'none'; }
+            } else {
+                 greetingElement.innerHTML = `आपको दीपावली की हार्दिक शुभकामनाएँ!`;
+                 senderInfo.style.display = 'block';
+                 senderPhotoImg.style.display = 'none';
+            }
+            initBlinkingLights();
+            initSparklers();
+        };
+        
+        function showSubscribePopup() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) { alert("कृपया पहले अपना नाम दर्ज करें!"); return; }
+            document.getElementById('subscribe-modal').style.display = 'flex';
+        }
+
+        function handleSubscription() {
+            window.open(youtubeChannelUrl, '_blank');
+            document.getElementById('subscribe-modal').style.display = 'none';
+            generateLink();
+        }
+
+        function generateLink() {
+            const name = document.getElementById('nameInput').value.trim();
+            const photo = document.getElementById('photoInput').value.trim();
+            const baseUrl = window.location.href.split('?')[0];
+            let newLink = `${baseUrl}?name=${encodeURIComponent(name)}`;
+            if (photo) { newLink += `&photo=${encodeURIComponent(photo)}`; }
+            document.getElementById('generatedLink').value = newLink;
+            document.getElementById('linkContainer').style.display = 'block';
+            document.getElementById('shareBtn').style.display = 'inline-flex';
+            document.getElementById('generateBtn').style.display = 'none';
+        }
+
+        async function shareLink() {
+            const link = document.getElementById('generatedLink').value;
+            const name = document.getElementById('nameInput').value.trim() || "किसी अपने ने";
+            const shareData = { title: 'दिवाली की शुभकामनाएँ!', text: `${name} ने आपको दिवाली की शुभकामनाएँ भेजी हैं:`, url: link, };
+            if (navigator.share) {
+                try { await navigator.share(shareData); } catch (err) { console.log("Share cancelled"); }
+            } else {
+                navigator.clipboard.writeText(link);
+                alert("लिंक कॉपी हो गया! अब आप इसे कहीं भी पेस्ट करके शेयर कर सकते हैं।");
+            }
+        }
+        
+        function initSparklers() {
+            const container = document.getElementById('shayariBox');
+            for(let i=0; i<20; i++) {
+                const sparkler = document.createElement('div');
+                sparkler.className = 'sparkler';
+                sparkler.style.top = `${Math.random() * 100}%`;
+                sparkler.style.left = `${Math.random() * 100}%`;
+                sparkler.style.animationDelay = `${Math.random() * 1.5}s`;
+                container.appendChild(sparkler);
+            }
+        }
+
+        function initBlinkingLights() { /* ... (यह कोड संक्षिप्तता के लिए छोटा किया गया है) ... */ }
+        
+        // --- फायरवर्क्स एनिमेशन ---
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let fireworks = []; let particles = [];
+        const gravity = 0.05;
+        class Firework { constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height; this.targetY = Math.random() * (canvas.height / 2); this.color = `hsl(${Math.random() * 360}, 100%, 50%)`; this.speed = 4 + Math.random() * 4; } update() { this.y -= this.speed; return this.y < this.targetY; } draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2); ctx.fill(); } explode() { for (let i = 0; i < 150; i++) particles.push(new Particle(this.x, this.y, this.color)); } }
+        class Particle { constructor(x, y, color) { this.x = x; this.y = y; this.color = color; this.size = Math.random() * 2 + 1; this.alpha = 1; this.angle = Math.random() * Math.PI * 2; this.speed = Math.random() * 10 + 2; this.friction = 0.96; this.vx = Math.cos(this.angle) * this.speed; this.vy = Math.sin(this.angle) * this.speed; } update() { this.vx *= this.friction; this.vy *= this.friction; this.vy += gravity; this.x += this.vx; this.y += this.vy; this.alpha -= 0.02; return this.alpha > 0; } draw() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); ctx.restore(); } }
+        function animate() { ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height); fireworks.forEach((fw, i) => { if (fw.update()) { fw.explode(); fireworks.splice(i, 1); } else { fw.draw(); } }); particles.forEach((p, i) => { if (!p.update()) { particles.splice(i, 1); } else { p.draw(); } }); requestAnimationFrame(animate); }
+        setInterval(() => { if (fireworks.length < 25) fireworks.push(new Firework()); }, 150);
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+        animate();
+        initBlinkingLights();
+    </script>
+</body>
+</html>
